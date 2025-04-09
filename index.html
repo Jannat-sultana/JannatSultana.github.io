@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+        }
+        
+        .profile-text {
+            max-width: 600px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background-color: var(--secondary-color);
+            padding: 0.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .tab-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .list-container {
+            margin-bottom: 2rem;
+        }
+        
+        .item-list {
+            list-style: none;
+        }
+        
+        .item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .item-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .item-description {
+            margin-bottom: 1rem;
+        }
+        
+        .item-link {
+            display: inline-block;
+            margin-right: 1rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .item-link:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .contact-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 250px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-link {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            margin-top: 0.5rem;
+        }
+        
+        .contact-link:hover {
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .tab-content {
+                padding: 1rem;
+            }
+            
+            .item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="profile-container">
+            <img src="/api/placeholder/400/400" alt="Profile" class="profile-image">
+            <div class="profile-text">
+                <h1>Your Name</h1>
+                <p class="subtitle">Your Title or Specialization</p>
+                <p>Welcome to my professional portfolio. I am passionate about [your field] with expertise in [your specific areas]. Explore my work and achievements through the tabs below.</p>
+            </div>
+        </div>
+    </header>
+    
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('home')">Home</button>
+        <button class="tab-btn" onclick="openTab('publications')">Publications</button>
+        <button class="tab-btn" onclick="openTab('projects')">Projects</button>
+        <button class="tab-btn" onclick="openTab('achievements')">Achievements</button>
+        <button class="tab-btn" onclick="openTab('courses')">Courses</button>
+        <button class="tab-btn" onclick="openTab('contact')">Contact</button>
+    </div>
+    
+    <div id="home" class="tab-content active">
+        <h2 class="section-title">About Me</h2>
+        <p>Hello! I'm [Your Name], a [Your Profession] specializing in [Your Specialization]. With [X] years of experience in the field, I've developed expertise in [Key Skills].</p>
+        <p>My work focuses on [Your Focus Areas], and I'm particularly interested in [Your Interests].</p>
+        
+        <h2 class="section-title">Education</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Degree Name</h3>
+                    <p class="item-description">University Name, Year</p>
+                    <p>Description of your studies, significant achievements, or relevant coursework.</p>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Another Degree</h3>
+                    <p class="item-description">University Name, Year</p>
+                    <p>Description of your studies, significant achievements, or relevant coursework.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Skills</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Technical Skills</h3>
+                    <p>Programming Languages, Software, Tools, etc.</p>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Soft Skills</h3>
+                    <p>Leadership, Communication, Project Management, etc.</p>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Research Skills</h3>
+                    <p>Methodologies, Analysis, Writing, etc.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="publications" class="tab-content">
+        <h2 class="section-title">Academic Publications</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Publication Title 1</h3>
+                    <p class="item-description">Authors, Journal/Conference, Year</p>
+                    <p>Brief description of the research and its significance.</p>
+                    <a href="#" class="item-link">Read Paper</a>
+                    <a href="#" class="item-link">View Code</a>
+                    <a href="#" class="item-link">See Demo</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Publication Title 2</h3>
+                    <p class="item-description">Authors, Journal/Conference, Year</p>
+                    <p>Brief description of the research and its significance.</p>
+                    <a href="#" class="item-link">Read Paper</a>
+                    <a href="#" class="item-link">View Code</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Publication Title 3</h3>
+                    <p class="item-description">Authors, Journal/Conference, Year</p>
+                    <p>Brief description of the research and its significance.</p>
+                    <a href="#" class="item-link">Read Paper</a>
+                    <a href="#" class="item-link">See Demo</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Industry Publications</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">White Paper Title 1</h3>
+                    <p class="item-description">Organization, Year</p>
+                    <p>Brief description of the paper and its significance.</p>
+                    <a href="#" class="item-link">Read Paper</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Technical Report 1</h3>
+                    <p class="item-description">Organization, Year</p>
+                    <p>Brief description of the report and its significance.</p>
+                    <a href="#" class="item-link">Read Report</a>
+                    <a href="#" class="item-link">View Findings</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Blog Post Series</h3>
+                    <p class="item-description">Platform, Year</p>
+                    <p>Brief description of the blog series and its topics.</p>
+                    <a href="#" class="item-link">Read Series</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Books & Book Chapters</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Book Title 1</h3>
+                    <p class="item-description">Publisher, Year</p>
+                    <p>Brief description of the book and its significance.</p>
+                    <a href="#" class="item-link">Publisher Page</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Book Chapter 1</h3>
+                    <p class="item-description">Book Title, Publisher, Year</p>
+                    <p>Brief description of the chapter and its significance.</p>
+                    <a href="#" class="item-link">Read Chapter</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Book Chapter 2</h3>
+                    <p class="item-description">Book Title, Publisher, Year</p>
+                    <p>Brief description of the chapter and its significance.</p>
+                    <a href="#" class="item-link">Read Chapter</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="projects" class="tab-content">
+        <h2 class="section-title">Research Projects</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Research Project 1</h3>
+                    <p class="item-description">Duration, Funding Source (if applicable)</p>
+                    <p>Description of the project, your role, and key outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                    <a href="#" class="item-link">View Code</a>
+                    <a href="#" class="item-link">See Demo</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Research Project 2</h3>
+                    <p class="item-description">Duration, Funding Source (if applicable)</p>
+                    <p>Description of the project, your role, and key outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                    <a href="#" class="item-link">View Code</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Research Project 3</h3>
+                    <p class="item-description">Duration, Funding Source (if applicable)</p>
+                    <p>Description of the project, your role, and key outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                    <a href="#" class="item-link">View Results</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Software Projects</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Software Project 1</h3>
+                    <p class="item-description">Technologies Used</p>
+                    <p>Description of the project, your role, and key features.</p>
+                    <a href="#" class="item-link">GitHub Repo</a>
+                    <a href="#" class="item-link">Live Demo</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Software Project 2</h3>
+                    <p class="item-description">Technologies Used</p>
+                    <p>Description of the project, your role, and key features.</p>
+                    <a href="#" class="item-link">GitHub Repo</a>
+                    <a href="#" class="item-link">Documentation</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Software Project 3</h3>
+                    <p class="item-description">Technologies Used</p>
+                    <p>Description of the project, your role, and key features.</p>
+                    <a href="#" class="item-link">GitHub Repo</a>
+                    <a href="#" class="item-link">Live Demo</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Collaborative Projects</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Collaborative Project 1</h3>
+                    <p class="item-description">Collaborators, Duration</p>
+                    <p>Description of the project, your role, and key outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                    <a href="#" class="item-link">Results</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Collaborative Project 2</h3>
+                    <p class="item-description">Collaborators, Duration</p>
+                    <p>Description of the project, your role, and key outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                    <a href="#" class="item-link">Publication</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Collaborative Project 3</h3>
+                    <p class="item-description">Collaborators, Duration</p>
+                    <p>Description of the project, your role, and key outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                    <a href="#" class="item-link">Demo</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="achievements" class="tab-content">
+        <h2 class="section-title">Awards & Recognitions</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Award 1</h3>
+                    <p class="item-description">Awarding Organization, Year</p>
+                    <p>Description of the award and the work that led to it.</p>
+                    <a href="#" class="item-link">Certificate</a>
+                    <a href="#" class="item-link">Press Release</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Award 2</h3>
+                    <p class="item-description">Awarding Organization, Year</p>
+                    <p>Description of the award and the work that led to it.</p>
+                    <a href="#" class="item-link">Certificate</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Recognition 1</h3>
+                    <p class="item-description">Recognizing Organization, Year</p>
+                    <p>Description of the recognition and its significance.</p>
+                    <a href="#" class="item-link">Details</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Grants & Funding</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Grant 1</h3>
+                    <p class="item-description">Funding Agency, Amount, Duration</p>
+                    <p>Description of the grant purpose and project outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                    <a href="#" class="item-link">Results</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Grant 2</h3>
+                    <p class="item-description">Funding Agency, Amount, Duration</p>
+                    <p>Description of the grant purpose and project outcomes.</p>
+                    <a href="#" class="item-link">Project Page</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Scholarship</h3>
+                    <p class="item-description">Awarding Organization, Year</p>
+                    <p>Description of the scholarship and its significance.</p>
+                    <a href="#" class="item-link">Details</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Invited Talks & Presentations</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Talk 1</h3>
+                    <p class="item-description">Event, Location, Date</p>
+                    <p>Description of the talk and its impact.</p>
+                    <a href="#" class="item-link">Slides</a>
+                    <a href="#" class="item-link">Recording</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Talk 2</h3>
+                    <p class="item-description">Event, Location, Date</p>
+                    <p>Description of the talk and its impact.</p>
+                    <a href="#" class="item-link">Slides</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Panel Discussion</h3>
+                    <p class="item-description">Event, Location, Date</p>
+                    <p>Description of the panel and your contribution.</p>
+                    <a href="#" class="item-link">Event Page</a>
+                    <a href="#" class="item-link">Recording</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="courses" class="tab-content">
+        <h2 class="section-title">Courses Taught</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Course 1</h3>
+                    <p class="item-description">Institution, Semesters</p>
+                    <p>Description of the course, topics covered, and teaching approach.</p>
+                    <a href="#" class="item-link">Syllabus</a>
+                    <a href="#" class="item-link">Course Materials</a>
+                    <a href="#" class="item-link">Student Projects</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Course 2</h3>
+                    <p class="item-description">Institution, Semesters</p>
+                    <p>Description of the course, topics covered, and teaching approach.</p>
+                    <a href="#" class="item-link">Syllabus</a>
+                    <a href="#" class="item-link">Course Materials</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Course 3</h3>
+                    <p class="item-description">Institution, Semesters</p>
+                    <p>Description of the course, topics covered, and teaching approach.</p>
+                    <a href="#" class="item-link">Syllabus</a>
+                    <a href="#" class="item-link">Student Feedback</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Workshops & Seminars</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Workshop 1</h3>
+                    <p class="item-description">Venue, Date</p>
+                    <p>Description of the workshop, topics covered, and participants.</p>
+                    <a href="#" class="item-link">Materials</a>
+                    <a href="#" class="item-link">Recording</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Workshop 2</h3>
+                    <p class="item-description">Venue, Date</p>
+                    <p>Description of the workshop, topics covered, and participants.</p>
+                    <a href="#" class="item-link">Materials</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Seminar Series</h3>
+                    <p class="item-description">Venue, Dates</p>
+                    <p>Description of the seminar series, topics covered, and impact.</p>
+                    <a href="#" class="item-link">Series Page</a>
+                    <a href="#" class="item-link">Recordings</a>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Certifications & Training</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item">
+                    <h3 class="item-title">Certification 1</h3>
+                    <p class="item-description">Issuing Organization, Date</p>
+                    <p>Description of the certification, skills acquired, and relevance.</p>
+                    <a href="#" class="item-link">Certificate</a>
+                    <a href="#" class="item-link">Verification</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Certification 2</h3>
+                    <p class="item-description">Issuing Organization, Date</p>
+                    <p>Description of the certification, skills acquired, and relevance.</p>
+                    <a href="#" class="item-link">Certificate</a>
+                </li>
+                <li class="item">
+                    <h3 class="item-title">Training Program</h3>
+                    <p class="item-description">Institution, Date</p>
+                    <p>Description of the training, skills acquired, and relevance.</p>
+                    <a href="#" class="item-link">Details</a>
+                    <a href="#" class="item-link">Projects</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div id="contact" class="tab-content">
+        <h2 class="section-title">Connect With Me</h2>
+        <div class="contact-container">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email</h3>
+                <a href="mailto:your.email@example.com" class="contact-link">your.email@example.com</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">👔</div>
+                <h3>LinkedIn</h3>
+                <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">linkedin.com/in/yourprofile</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">💻</div>
+                <h3>GitHub</h3>
+                <a href="https://github.com/yourusername" class="contact-link" target="_blank">github.com/yourusername</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">🐦</div>
+                <h3>Twitter/X</h3>
+                <a href="https://twitter.com/yourusername" class="contact-link" target="_blank">@yourusername</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📚</div>
+                <h3>Google Scholar</h3>
+                <a href="https://scholar.google.com/citations?user=yourid" class="contact-link" target="_blank">Google Scholar Profile</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">🌐</div>
+                <h3>Personal Website</h3>
+                <a href="https://yourwebsite.com" class="contact-link" target="_blank">yourwebsite.com</a>
+            </div>
+        </div>
+        
+        <h2 class="section-title">Get In Touch</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Feel free to reach out if you have any questions or would like to collaborate on a project.</p>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Your Name | Last Updated: April 2025</p>
+    </footer>
+    
+    <script>
+        function openTab(tabName) {
+            // Hide all tab content
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            // Show the selected tab content and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            
+            // Find and activate the corresponding button
+            const buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                if (buttons[i].getAttribute("onclick") === `openTab('${tabName}')`) {
+                    buttons[i].classList.add("active");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
