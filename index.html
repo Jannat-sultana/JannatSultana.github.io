@@ -12,6 +12,9 @@
             --light-color: #ecf0f1;
             --dark-color: #2c3e50;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --experience-color: #8e44ad;
+            --skill-category-bg: rgba(52, 152, 219, 0.1);
+            --timeline-color: #3498db;
         }
         
         * {
@@ -209,7 +212,129 @@
             padding: 1.5rem 0;
             margin-top: 2rem;
         }
-        
+
+        /* Enhanced Experience Section Styles */
+        .experience-item {
+            position: relative;
+            padding-left: 30px;
+            border-left: 3px solid var(--timeline-color);
+            margin-left: 15px;
+            background: white;
+        }
+
+        .experience-item:before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--timeline-color);
+            border-radius: 50%;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-date {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .experience-location {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .experience-location:before {
+            content: '📍';
+        }
+
+        .experience-description {
+            background: var(--skill-category-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .course-label {
+            font-weight: 600;
+            color: var(--experience-color);
+        }
+
+        /* Enhanced Skills Section Styles */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-item {
+            padding: 1.5rem;
+            background: var(--skill-category-bg);
+            border: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-color);
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-category-title {
+            display: block;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px dashed var(--primary-color);
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: white;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            background: var(--primary-color);
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .tabs {
                 flex-wrap: wrap;
@@ -226,6 +351,18 @@
             
             .item {
                 padding: 1rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+            
+            .experience-date {
+                align-self: flex-start;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
