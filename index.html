@@ -251,53 +251,100 @@
         <button class="tab-btn" onclick="openTab('contact')">Contact</button>
     </div>
     
-    <div id="home" class="tab-content active">
-        <h2 class="section-title">About Me</h2>
-        <p>Hello! I'm Jannat Sultana. I recently graduated from North South University with a Bachelor of Science in Computer Science and Engineering. I am currently working as a Graduate Research Assistant at North South University. I am also a Graduate Teaching Assistant at North South University, assisting in academic courses and student learning. I am passionate about AI and AI-driven applications with expertise in Machine Learning, Natural Language Processing, and Computer Vision.</p>
-        
-        <h2 class="section-title">Experience</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title"> Research Assistant</h3>
-                    <p class="item-description">North South University,  July 2024 - Present</p>
-                    <p>  Develop and implement research plans and methodologies, writing, and mentoring junior researchers.</p>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Graduate Teaching Assistant</h3>
-                    <p class="item-description">North South University, February 2025 - Present</p>
-                    <p>Course1: Machine Learning</p>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Undergraduate Teaching Assistant</h3>
-                    <p class="item-description">North South University, February 2023 - December 2024</p>
-                    <p>Course1: Microprocessor Interfacing & Embedded System</p>
-                    <p>Course2: Computer Organization And Architecture</p>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Skills</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Technical Skills</h3>
-                    <p>Programming Languages: C/C++, Python</p>
-                    <p> ML Frameworks: PyTorch, TensorFlow</p>
-                    <p> Web: HTML, CSS, JavaScript, SQL</p>
-                    <p>  Typesetting: LATEX, </p>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Soft Skills</h3>
-                    <p>Leadership, Communication, Project Management</p>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Research Skills</h3>
-                    <p>Methodologies, Analysis, Academic Writing, Visualization</p>
-                </li>
-            </ul>
-        </div>
+<div id="home" class="tab-content active">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-container">
+        <p class="about-text">Hello! I'm <span class="highlight">Jannat Sultana</span>. I recently graduated from North South University with a Bachelor of Science in Computer Science and Engineering. I am currently working as a <span class="highlight">Graduate Research Assistant</span> at North South University. I am also a <span class="highlight">Graduate Teaching Assistant</span> at North South University, assisting in academic courses and student learning. I am passionate about AI and AI-driven applications with expertise in Machine Learning, Natural Language Processing, and Computer Vision.</p>
     </div>
+    
+    <h2 class="section-title">Experience</h2>
+    <div class="list-container">
+        <ul class="item-list">
+            <li class="item experience-item">
+                <div class="experience-header">
+                    <h3 class="item-title">Research Assistant</h3>
+                    <span class="experience-date">July 2024 - Present</span>
+                </div>
+                <p class="experience-location">North South University</p>
+                <p class="experience-description">Develop and implement research plans and methodologies, writing, and mentoring junior researchers.</p>
+            </li>
+            <li class="item experience-item">
+                <div class="experience-header">
+                    <h3 class="item-title">Graduate Teaching Assistant</h3>
+                    <span class="experience-date">February 2025 - Present</span>
+                </div>
+                <p class="experience-location">North South University</p>
+                <p class="experience-description"><span class="course-label">Course:</span> Machine Learning</p>
+            </li>
+            <li class="item experience-item">
+                <div class="experience-header">
+                    <h3 class="item-title">Undergraduate Teaching Assistant</h3>
+                    <span class="experience-date">February 2023 - December 2024</span>
+                </div>
+                <p class="experience-location">North South University</p>
+                <p class="experience-description">
+                    <span class="course-label">Course 1:</span> Microprocessor Interfacing & Embedded System<br>
+                    <span class="course-label">Course 2:</span> Computer Organization And Architecture
+                </p>
+            </li>
+        </ul>
+    </div>
+    
+    <h2 class="section-title">Skills</h2>
+    <div class="list-container">
+        <ul class="item-list skills-grid">
+            <li class="item skill-item">
+                <div class="skill-icon">💻</div>
+                <h3 class="item-title">Technical Skills</h3>
+                <div class="skill-details">
+                    <div class="skill-category">
+                        <span class="skill-category-title">Programming Languages:</span>
+                        <span class="skill-tag">C/C++</span>
+                        <span class="skill-tag">Python</span>
+                    </div>
+                    <div class="skill-category">
+                        <span class="skill-category-title">ML Frameworks:</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">TensorFlow</span>
+                    </div>
+                    <div class="skill-category">
+                        <span class="skill-category-title">Web:</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">SQL</span>
+                    </div>
+                    <div class="skill-category">
+                        <span class="skill-category-title">Typesetting:</span>
+                        <span class="skill-tag">LaTeX</span>
+                    </div>
+                </div>
+            </li>
+            <li class="item skill-item">
+                <div class="skill-icon">🤝</div>
+                <h3 class="item-title">Soft Skills</h3>
+                <div class="skill-details">
+                    <span class="skill-tag">Leadership</span>
+                    <span class="skill-tag">Communication</span>
+                    <span class="skill-tag">Project Management</span>
+                    <span class="skill-tag">Team Collaboration</span>
+                    <span class="skill-tag">Problem Solving</span>
+                </div>
+            </li>
+            <li class="item skill-item">
+                <div class="skill-icon">🔍</div>
+                <h3 class="item-title">Research Skills</h3>
+                <div class="skill-details">
+                    <span class="skill-tag">Research Methodologies</span>
+                    <span class="skill-tag">Data Analysis</span>
+                    <span class="skill-tag">Academic Writing</span>
+                    <span class="skill-tag">Visualization</span>
+                    <span class="skill-tag">Literature Review</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
     
     <div id="publications" class="tab-content">
         <h2 class="section-title">Academic Publications</h2>
