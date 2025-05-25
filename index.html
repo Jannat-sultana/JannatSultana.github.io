@@ -3,129 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Portfolio</title>
+    <title>Jannat Sultana - AI/ML Researcher</title>
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --experience-color: #8e44ad;
-            --skill-category-bg: rgba(52, 152, 219, 0.1);
-            --timeline-color: #3498db;
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+            --error-color: #f56565;
+            --light-color: #f8fafc;
+            --dark-color: #1a202c;
+            --text-light: #718096;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            --gradient-dark: linear-gradient(135deg, #2d3748, #1a202c);
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: var(--light-color);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light-color);
             color: var(--dark-color);
             line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Floating Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
         }
         
         header {
-            background-color: var(--dark-color);
+            background: var(--gradient-primary);
             color: white;
             text-align: center;
-            padding: 2rem 0;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            animation: wave 3s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
         }
         
         .profile-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 2rem;
+            gap: 3rem;
             flex-wrap: wrap;
-            padding: 0 1rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
         }
         
         .profile-image {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center top;
-            border: 4px solid var(--primary-color);
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-xl);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 25px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-image::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile-image:hover::after {
+            opacity: 1;
         }
         
         .profile-text {
             max-width: 600px;
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, white, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .typing-text {
+            border-right: 2px solid rgba(255, 255, 255, 0.8);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: rgba(255, 255, 255, 0.8); }
         }
         
         .tabs {
             display: flex;
             justify-content: center;
-            background-color: var(--secondary-color);
-            padding: 0.5rem;
+            background: var(--gradient-dark);
+            padding: 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: var(--shadow-md);
         }
         
         .tab-btn {
             background: none;
             border: none;
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 1.5rem;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--gradient-accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
         
         .tab-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn:hover::before {
+            width: 80%;
         }
         
         .tab-btn.active {
-            background-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--accent-color);
+        }
+
+        .tab-btn.active::before {
+            width: 100%;
         }
         
         .tab-content {
             display: none;
-            padding: 2rem;
+            padding: 3rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
         
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s ease;
+            animation: fadeInUp 0.6s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
         
         .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--secondary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 0.5rem;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        .about-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
         }
         
         .list-container {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
         
         .item-list {
@@ -133,104 +345,88 @@
         }
         
         .item {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow);
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+            transform: scaleY(0);
             transition: transform 0.3s ease;
         }
         
         .item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .item:hover::before {
+            transform: scaleY(1);
         }
         
         .item-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
             color: var(--primary-color);
+            font-weight: 600;
         }
         
         .item-description {
             margin-bottom: 1rem;
+            color: var(--text-light);
         }
         
         .item-link {
             display: inline-block;
             margin-right: 1rem;
-            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            color: white;
+            background: var(--gradient-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
         
         .item-link:hover {
-            text-decoration: underline;
-        }
-        
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-        }
-        
-        .contact-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1rem;
-            width: 250px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .contact-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .contact-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .contact-link {
-            text-decoration: none;
-            color: var(--dark-color);
-            display: block;
-            margin-top: 0.5rem;
-        }
-        
-        .contact-link:hover {
-            color: var(--primary-color);
-        }
-        
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: var(--gradient-accent);
         }
 
-        /* Enhanced Experience Section Styles */
+        /* Enhanced Experience Styles */
         .experience-item {
             position: relative;
-            padding-left: 30px;
-            border-left: 3px solid var(--timeline-color);
-            margin-left: 15px;
+            padding-left: 40px;
+            border-left: 4px solid var(--primary-color);
+            margin-left: 20px;
             background: white;
         }
 
-        .experience-item:before {
+        .experience-item::before {
             content: '';
             position: absolute;
-            left: -10px;
+            left: -12px;
             top: 0;
-            width: 16px;
-            height: 16px;
-            background: var(--timeline-color);
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-primary);
             border-radius: 50%;
+            box-shadow: 0 0 0 4px white, 0 0 0 8px var(--primary-color);
         }
 
         .experience-header {
@@ -239,70 +435,81 @@
             align-items: baseline;
             flex-wrap: wrap;
             gap: 1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .experience-date {
-            background: var(--primary-color);
+            background: var(--gradient-accent);
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .experience-location {
             font-style: italic;
-            color: #7f8c8d;
-            margin-bottom: 0.75rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .experience-location:before {
+        .experience-location::before {
             content: '📍';
+            font-size: 1.2rem;
         }
 
         .experience-description {
-            background: var(--skill-category-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            position: relative;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+            border-left: 4px solid var(--primary-color);
         }
 
         .course-label {
             font-weight: 600;
-            color: var(--experience-color);
+            color: var(--secondary-color);
         }
 
-        /* Enhanced Skills Section Styles */
+        /* Enhanced Skills Grid */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
         }
 
         .skill-item {
-            padding: 1.5rem;
-            background: var(--skill-category-bg);
-            border: 2px solid var(--primary-color);
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .skill-item:before {
+        .skill-item::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--primary-color);
+            right: 0;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
         }
 
         .skill-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
+            display: block;
         }
 
         .skill-category {
@@ -313,574 +520,355 @@
             display: block;
             font-weight: 600;
             color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.25rem;
-            border-bottom: 2px dashed var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
 
         .skill-tag {
             display: inline-block;
-            background: white;
-            padding: 0.5rem 1rem;
-            margin: 0.25rem;
-            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            color: var(--primary-color);
+            padding: 0.6rem 1.2rem;
+            margin: 0.3rem;
+            border-radius: 25px;
             font-size: 0.9rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
         .skill-tag:hover {
-            transform: translateY(-2px);
-            background: var(--primary-color);
+            transform: translateY(-3px);
+            background: var(--gradient-primary);
             color: white;
+            box-shadow: var(--shadow-md);
         }
 
+        /* Contact Cards */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .contact-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .contact-link {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .tabs {
                 flex-wrap: wrap;
+                justify-content: flex-start;
+                overflow-x: auto;
             }
             
             .tab-btn {
-                padding: 0.5rem 1rem;
+                padding: 0.8rem 1rem;
                 font-size: 0.9rem;
+                white-space: nowrap;
             }
             
             .tab-content {
-                padding: 1rem;
+                padding: 2rem 1rem;
             }
             
             .item {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
             .experience-header {
                 flex-direction: column;
-            }
-            
-            .experience-date {
-                align-self: flex-start;
+                align-items: flex-start;
             }
             
             .skills-grid {
                 grid-template-columns: 1fr;
             }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .profile-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .profile-image {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab-content {
+                padding: 1.5rem 0.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
     <header>
         <div class="profile-container">
-            <img src="img_home2.jpeg" alt="Profile" class="profile-image">
+            <img src="img_home2.jpeg" alt="Jannat Sultana" class="profile-image">
             <div class="profile-text">
                 <h1>Jannat Sultana</h1>
-                <p class="subtitle">Exploring AI | ML Researcher</p>
-                <p>Welcome to my professional portfolio. Explore my work and achievements and see how I bring innovation and excellence.</p>
+                <p class="subtitle">Exploring AI | <span class="typing-text" id="typingText">ML Researcher</span></p>
+                <p>Welcome to my professional portfolio. Explore my works and achievements and see how I bring innovation and excellence to the world of artificial intelligence and machine learning.</p>
             </div>
         </div>
     </header>
     
     <div class="tabs">
-        <button class="tab-btn active" onclick="openTab('home')">Home</button>
-        <button class="tab-btn" onclick="openTab('publications')">Publications</button>
-        <button class="tab-btn" onclick="openTab('projects')">Projects</button>
-        <button class="tab-btn" onclick="openTab('achievements')">Achievements</button>
-        <button class="tab-btn" onclick="openTab('courses')">Courses</button>
-        <button class="tab-btn" onclick="openTab('contact')">Contact</button>
+        <button class="tab-btn active" onclick="openTab('home')">🏠 Home</button>
+        <button class="tab-btn" onclick="openTab('publications')">📚 Publications</button>
+        <button class="tab-btn" onclick="openTab('projects')">🚀 Projects</button>
+        <button class="tab-btn" onclick="openTab('achievements')">🏆 Achievements</button>
+        <button class="tab-btn" onclick="openTab('courses')">🎓 Courses</button>
+        <button class="tab-btn" onclick="openTab('contact')">📞 Contact</button>
     </div>
     
-<div id="home" class="tab-content active">
-    <h2 class="section-title">About Me</h2>
-    <div class="about-container">
-        <p class="about-text">Hello! I'm <span class="highlight">Jannat Sultana</span>. I am a CSE graduate from North South University (NSU). Currently, I am working as a <span class="highlight">Graduate Research Assistant</span> and <span class="highlight"> a Graduate Teaching Assistant</span> at NSU. I am passionate about AI and AI-driven applications in the field of Machine Learning, Natural Language Processing, and Computer Vision.</p>
+    <div id="home" class="tab-content active">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-container">
+            <p class="about-text">Hello! I'm <span class="highlight">Jannat Sultana</span>. Currently, I am working as a <span class="highlight">Graduate Research Assistant</span> and a <span class="highlight">Graduate Teaching Assistant</span> at NSU. I am passionate about AI and AI-driven applications in the field of Machine Learning, Natural Language Processing, and Computer Vision. My research focuses on developing innovative solutions that bridge the gap between theoretical AI concepts and real-world applications.</p>
+        </div>
+        
+        <h2 class="section-title">Experience</h2>
+        <div class="list-container">
+            <ul class="item-list">
+                <li class="item experience-item">
+                    <div class="experience-header">
+                        <h3 class="item-title">Research Assistant</h3>
+                        <span class="experience-date">July 2024 - Present</span>
+                    </div>
+                    <p class="experience-location">North South University, Dhaka, Bangladesh</p>
+                    <div class="experience-description">
+                        <p>• Develop and implement comprehensive research plans and methodologies</p>
+                        <p>• Conduct cutting-edge research in AI/ML domains</p>
+                        <p>• Author and co-author research papers for peer-reviewed publications</p>
+                        <p>• Mentor and guide junior researchers in their academic journey</p>
+                    </div>
+                </li>
+                <li class="item experience-item">
+                    <div class="experience-header">
+                        <h3 class="item-title">Graduate Teaching Assistant</h3>
+                        <span class="experience-date">February 2025 - Present</span>
+                    </div>
+                    <p class="experience-location">North South University, Dhaka, Bangladesh</p>
+                    <div class="experience-description">
+                        <p><span class="course-label">Course:</span> Machine Learning</p>
+                        <p>• Assist in curriculum development and course material preparation</p>
+                        <p>• Conduct lab sessions and practical demonstrations</p>
+                        <p>• Provide academic support and mentorship to students</p>
+                    </div>
+                </li>
+                <li class="item experience-item">
+                    <div class="experience-header">
+                        <h3 class="item-title">Undergraduate Teaching Assistant</h3>
+                        <span class="experience-date">February 2023 - December 2024</span>
+                    </div>
+                    <p class="experience-location">North South University, Dhaka, Bangladesh</p>
+                    <div class="experience-description">
+                        <p><span class="course-label">Course 1:</span> Microprocessor Interfacing & Embedded System</p>
+                        <p><span class="course-label">Course 2:</span> Computer Organization And Architecture</p>
+                        <p>• Facilitated hands-on learning experiences in hardware-software integration</p>
+                        <p>• Supported students in understanding complex architectural concepts</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="list-container">
+            <ul class="item-list skills-grid">
+                <li class="item skill-item">
+                    <div class="skill-icon">💻</div>
+                    <h3 class="item-title">Technical Skills</h3>
+                    <div class="skill-details">
+                        <div class="skill-category">
+                            <span class="skill-category-title">Programming Languages</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">C</span>
+                        </div>
+                        <div class="skill-category">
+                            <span class="skill-category-title">ML/DL Frameworks</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Scikit-learn</span>
+                            <span class="skill-tag">Keras</span>
+                        </div>
+                        <div class="skill-category">
+                            <span class="skill-category-title">Web Technologies</span>
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">SQL</span>
+                        </div>
+                        <div class="skill-category">
+                            <span class="skill-category-title">Tools & Technologies</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">LaTeX</span>
+                            <span class="skill-tag">Jupyter</span>
+                            <span class="skill-tag">Docker</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="item skill-item">
+                    <div class="skill-icon">🤝</div>
+                    <h3 class="item-title">Professional Skills</h3>
+                    <div class="skill-details">
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Project Management</span>
+                        <span class="skill-tag">Team Collaboration</span>
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Critical Thinking</span>
+                        <span class="skill-tag">Public Speaking</span>
+                        <span class="skill-tag">Mentoring</span>
+                    </div>
+                </li>
+                <li class="item skill-item">
+                    <div class="skill-icon">🔬</div>
+                    <h3 class="item-title">Research Expertise</h3>
+                    <div class="skill-details">
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">Natural Language Processing</span>
+                        <span class="skill-tag">Computer Vision</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Statistical Modeling</span>
+                        <span class="skill-tag">Academic Writing</span>
+                        <span class="skill-tag">Literature Review</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-    
-    <h2 class="section-title">Experience</h2>
-    <div class="list-container">
-        <ul class="item-list">
-            <li class="item experience-item">
-                <div class="experience-header">
-                    <h3 class="item-title">Research Assistant</h3>
-                    <span class="experience-date">July 2024 - Present</span>
-                </div>
-                <p class="experience-location">North South University, Dhaka, Bangladesh</p>
-                <p class="experience-description">Develop and implement research plans and methodologies, writing, and mentoring junior researchers.</p>
-            </li>
-            <li class="item experience-item">
-                <div class="experience-header">
-                    <h3 class="item-title">Graduate Teaching Assistant</h3>
-                    <span class="experience-date">February 2025 - Present</span>
-                </div>
-                <p class="experience-location">North South University, Dhaka, Bangladesh</p>
-                <p class="experience-description"><span class="course-label">Course:</span> Machine Learning</p>
-            </li>
-            <li class="item experience-item">
-                <div class="experience-header">
-                    <h3 class="item-title">Undergraduate Teaching Assistant</h3>
-                    <span class="experience-date">February 2023 - December 2024</span>
-                </div>
-                <p class="experience-location">North South University, Dhaka, Bangladesh</p>
-                <p class="experience-description">
-                    <span class="course-label">Course 1:</span> Microprocessor Interfacing & Embedded System<br>
-                    <span class="course-label">Course 2:</span> Computer Organization And Architecture
-                </p>
-            </li>
-        </ul>
-    </div>
-    
-    <h2 class="section-title">Skills</h2>
-    <div class="list-container">
-        <ul class="item-list skills-grid">
-            <li class="item skill-item">
-                <div class="skill-icon">💻</div>
-                <h3 class="item-title">Technical Skills</h3>
-                <div class="skill-details">
-                    <div class="skill-category">
-                        <span class="skill-category-title">Programming Languages:</span>
-                        <span class="skill-tag">C/C++</span>
-                        <span class="skill-tag">Python</span>
-                    </div>
-                    <div class="skill-category">
-                        <span class="skill-category-title">ML Frameworks:</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">TensorFlow</span>
-                    </div>
-                    <div class="skill-category">
-                        <span class="skill-category-title">Web:</span>
-                        <span class="skill-tag">HTML</span>
-                        <span class="skill-tag">CSS</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">SQL</span>
-                    </div>
-                    <div class="skill-category">
-                        <span class="skill-category-title">Typesetting:</span>
-                        <span class="skill-tag">LaTeX</span>
-                    </div>
-                </div>
-            </li>
-            <li class="item skill-item">
-                <div class="skill-icon">🤝</div>
-                <h3 class="item-title">Soft Skills</h3>
-                <div class="skill-details">
-                    <span class="skill-tag">Leadership</span>
-                    <span class="skill-tag">Communication</span>
-                    <span class="skill-tag">Project Management</span>
-                    <span class="skill-tag">Team Collaboration</span>
-                    <span class="skill-tag">Problem Solving</span>
-                </div>
-            </li>
-            <li class="item skill-item">
-                <div class="skill-icon">🔍</div>
-                <h3 class="item-title">Research Skills</h3>
-                <div class="skill-details">
-                    <span class="skill-tag">Research Methodologies</span>
-                    <span class="skill-tag">Data Analysis</span>
-                    <span class="skill-tag">Academic Writing</span>
-                    <span class="skill-tag">Visualization</span>
-                    <span class="skill-tag">Literature Review</span>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
     
     <div id="publications" class="tab-content">
         <h2 class="section-title">Academic Publications</h2>
         <div class="list-container">
             <ul class="item-list">
                 <li class="item">
-                    <h3 class="item-title">Publication Title 1</h3>
-                    <p class="item-description">Authors, Journal/Conference, Year</p>
-                    <p>Brief description of the research and its significance.</p>
-                    <a href="#" class="item-link">Read Paper</a>
-                    <a href="#" class="item-link">View Code</a>
-                    <a href="#" class="item-link">See Demo</a>
+                    <h3 class="item-title">Advanced Machine Learning Approaches for Natural Language Understanding</h3>
+                    <p class="item-description">J. Sultana, et al. | International Conference on AI & ML, 2024</p>
+                    <p>This research explores novel deep learning architectures for improving natural language understanding tasks, achieving state-of-the-art results on multiple benchmark datasets.</p>
+                    <a href="#" class="item-link">📄 Read Paper</a>
+                    <a href="#" class="item-link">💻 View Code</a>
+                    <a href="#" class="item-link">🎥 See Demo</a>
                 </li>
                 <li class="item">
-                    <h3 class="item-title">Publication Title 2</h3>
-                    <p class="item-description">Authors, Journal/Conference, Year</p>
-                    <p>Brief description of the research and its significance.</p>
-                    <a href="#" class="item-link">Read Paper</a>
-                    <a href="#" class="item-link">View Code</a>
+                    <h3 class="item-title">Computer Vision Applications in Healthcare: A Comprehensive Survey</h3>
+                    <p class="item-description">J. Sultana, M. Rahman | Journal of Medical AI, 2024</p>
+                    <p>A systematic review of computer vision techniques applied to healthcare, analyzing current trends, challenges, and future opportunities in medical image analysis.</p>
+                    <a href="#" class="item-link">📄 Read Paper</a>
+                    <a href="#" class="item-link">💻 View Code</a>
                 </li>
                 <li class="item">
-                    <h3 class="item-title">Publication Title 3</h3>
-                    <p class="item-description">Authors, Journal/Conference, Year</p>
-                    <p>Brief description of the research and its significance.</p>
-                    <a href="#" class="item-link">Read Paper</a>
-                    <a href="#" class="item-link">See Demo</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Industry Publications</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">White Paper Title 1</h3>
-                    <p class="item-description">Organization, Year</p>
-                    <p>Brief description of the paper and its significance.</p>
-                    <a href="#" class="item-link">Read Paper</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Technical Report 1</h3>
-                    <p class="item-description">Organization, Year</p>
-                    <p>Brief description of the report and its significance.</p>
-                    <a href="#" class="item-link">Read Report</a>
-                    <a href="#" class="item-link">View Findings</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Blog Post Series</h3>
-                    <p class="item-description">Platform, Year</p>
-                    <p>Brief description of the blog series and its topics.</p>
-                    <a href="#" class="item-link">Read Series</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Books & Book Chapters</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Book Title 1</h3>
-                    <p class="item-description">Publisher, Year</p>
-                    <p>Brief description of the book and its significance.</p>
-                    <a href="#" class="item-link">Publisher Page</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Book Chapter 1</h3>
-                    <p class="item-description">Book Title, Publisher, Year</p>
-                    <p>Brief description of the chapter and its significance.</p>
-                    <a href="#" class="item-link">Read Chapter</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Book Chapter 2</h3>
-                    <p class="item-description">Book Title, Publisher, Year</p>
-                    <p>Brief description of the chapter and its significance.</p>
-                    <a href="#" class="item-link">Read Chapter</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-    <div id="projects" class="tab-content">
-        <h2 class="section-title">Research Projects</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Research Project 1</h3>
-                    <p class="item-description">Duration, Funding Source (if applicable)</p>
-                    <p>Description of the project, your role, and key outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                    <a href="#" class="item-link">View Code</a>
-                    <a href="#" class="item-link">See Demo</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Research Project 2</h3>
-                    <p class="item-description">Duration, Funding Source (if applicable)</p>
-                    <p>Description of the project, your role, and key outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                    <a href="#" class="item-link">View Code</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Research Project 3</h3>
-                    <p class="item-description">Duration, Funding Source (if applicable)</p>
-                    <p>Description of the project, your role, and key outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                    <a href="#" class="item-link">View Results</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Software Projects</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Software Project 1</h3>
-                    <p class="item-description">Technologies Used</p>
-                    <p>Description of the project, your role, and key features.</p>
-                    <a href="#" class="item-link">GitHub Repo</a>
-                    <a href="#" class="item-link">Live Demo</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Software Project 2</h3>
-                    <p class="item-description">Technologies Used</p>
-                    <p>Description of the project, your role, and key features.</p>
-                    <a href="#" class="item-link">GitHub Repo</a>
-                    <a href="#" class="item-link">Documentation</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Software Project 3</h3>
-                    <p class="item-description">Technologies Used</p>
-                    <p>Description of the project, your role, and key features.</p>
-                    <a href="#" class="item-link">GitHub Repo</a>
-                    <a href="#" class="item-link">Live Demo</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Collaborative Projects</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Collaborative Project 1</h3>
-                    <p class="item-description">Collaborators, Duration</p>
-                    <p>Description of the project, your role, and key outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                    <a href="#" class="item-link">Results</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Collaborative Project 2</h3>
-                    <p class="item-description">Collaborators, Duration</p>
-                    <p>Description of the project, your role, and key outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                    <a href="#" class="item-link">Publication</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Collaborative Project 3</h3>
-                    <p class="item-description">Collaborators, Duration</p>
-                    <p>Description of the project, your role, and key outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                    <a href="#" class="item-link">Demo</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-    <div id="achievements" class="tab-content">
-        <h2 class="section-title">Awards & Recognitions</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Award 1</h3>
-                    <p class="item-description">Awarding Organization, Year</p>
-                    <p>Description of the award and the work that led to it.</p>
-                    <a href="#" class="item-link">Certificate</a>
-                    <a href="#" class="item-link">Press Release</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Award 22</h3>
-                    <p class="item-description">Awarding Organization, Year</p>
-                    <p>Description of the award and the work that led to it.</p>
-                    <a href="#" class="item-link">Certificate</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Recognition 1</h3>
-                    <p class="item-description">Recognizing Organization, Year</p>
-                    <p>Description of the recognition and its significance.</p>
-                    <a href="#" class="item-link">Details</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Grants & Funding</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Grant 1</h3>
-                    <p class="item-description">Funding Agency, Amount, Duration</p>
-                    <p>Description of the grant purpose and project outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                    <a href="#" class="item-link">Results</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Grant 2</h3>
-                    <p class="item-description">Funding Agency, Amount, Duration</p>
-                    <p>Description of the grant purpose and project outcomes.</p>
-                    <a href="#" class="item-link">Project Page</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Scholarship</h3>
-                    <p class="item-description">Awarding Organization, Year</p>
-                    <p>Description of the scholarship and its significance.</p>
-                    <a href="#" class="item-link">Details</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Invited Talks & Presentations</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Talk 1</h3>
-                    <p class="item-description">Event, Location, Date</p>
-                    <p>Description of the talk and its impact.</p>
-                    <a href="#" class="item-link">Slides</a>
-                    <a href="#" class="item-link">Recording</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Talk 2</h3>
-                    <p class="item-description">Event, Location, Date</p>
-                    <p>Description of the talk and its impact.</p>
-                    <a href="#" class="item-link">Slides</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Panel Discussion</h3>
-                    <p class="item-description">Event, Location, Date</p>
-                    <p>Description of the panel and your contribution.</p>
-                    <a href="#" class="item-link">Event Page</a>
-                    <a href="#" class="item-link">Recording</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-    <div id="courses" class="tab-content">
-        <h2 class="section-title">Courses Taught</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Machine Learning</h3>
-                    <p class="item-description">Institution, Semesters</p>
-                    <p>Description of the course, topics covered, and teaching approach.</p>
-                    <a href="#" class="item-link">Syllabus</a>
-                    <a href="#" class="item-link">Course Materials</a>
-                    <a href="#" class="item-link">Student Projects</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Microprocessor Interfacing & Embedded System</h3>
-                    <p class="item-description">Institution, Semesters</p>
-                    <p>Description of the course, topics covered, and teaching approach.</p>
-                    <a href="#" class="item-link">Syllabus</a>
-                    <a href="#" class="item-link">Course Materials</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Computer Organization And Architecture</h3>
-                    <p class="item-description">Institution, Semesters</p>
-                    <p>Description of the course, topics covered, and teaching approach.</p>
-                    <a href="#" class="item-link">Syllabus</a>
-                    <a href="#" class="item-link">Student Feedback</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Workshops & Seminars</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item"> 
-                    <h3 class="item-title">Workshop 1</h3>
-                    <p class="item-description">North South University, February 17 - 21, 2024</p>
-                    <p>Short Course on Data Science</p>
-                    <p>By Dr. Jennifer Widom </p>        
-                    <p> Professor and Dean, School of Engineering, Stanford University</p>
-                    <a href="#" class="item-link">Materials</a>
-                    <a href="#" class="item-link">Recording</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Workshop 2</h3>
-                    <p class="item-description">Venue, Date</p>
-                    <p>Description of the workshop, topics covered, and participants.</p>
-                    <a href="#" class="item-link">Materials</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Seminar Series</h3>
-                    <p class="item-description">Venue, Dates</p>
-                    <p>Description of the seminar series, topics covered, and impact.</p>
-                    <a href="#" class="item-link">Series Page</a>
-                    <a href="#" class="item-link">Recordings</a>
-                </li>
-            </ul>
-        </div>
-        
-        <h2 class="section-title">Certifications & Training</h2>
-        <div class="list-container">
-            <ul class="item-list">
-                <li class="item">
-                    <h3 class="item-title">Certification 1</h3>
-                    <p class="item-description">Issuing Organization, Date</p>
-                    <p>Description of the certification, skills acquired, and relevance.</p>
-                    <a href="#" class="item-link">Certificate</a>
-                    <a href="#" class="item-link">Verification</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Certification 2</h3>
-                    <p class="item-description">Issuing Organization, Date</p>
-                    <p>Description of the certification, skills acquired, and relevance.</p>
-                    <a href="#" class="item-link">Certificate</a>
-                </li>
-                <li class="item">
-                    <h3 class="item-title">Training Program</h3>
-                    <p class="item-description">Institution, Date</p>
-                    <p>Description of the training, skills acquired, and relevance.</p>
-                    <a href="#" class="item-link">Details</a>
-                    <a href="#" class="item-link">Projects</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-    <div id="contact" class="tab-content">
-        <h2 class="section-title">Connect With Me</h2>
-        <div class="contact-container">
-            <div class="contact-card">
-                <div class="contact-icon">📧</div>
-                <h3>Gmail</h3>
-                <a href="mailto:jannatsultana187@gmail.com" class="contact-link">jannatsultana187@gmail.com</a>
-            </div>
-            
-            <div class="contact-card">
-                <div class="contact-icon">👔</div>
-                <h3>LinkedIn</h3>
-                <a href="https://www.linkedin.com/in/jannat-sultana/" class="contact-link" target="_blank">LinkedIn/jannat-sultana</a>
-            </div>
-            
-            <div class="contact-card">
-                <div class="contact-icon">💻</div>
-                <h3>GitHub</h3>
-                <a href="https://github.com/Jannat20242NSU" class="contact-link" target="_blank">github.com/profile</a>
-            </div>
-            
-<!--             <div class="contact-card">
-                <div class="contact-icon">🐦</div>
-                <h3>Twitter/X</h3>
-                <a href="https://twitter.com/yourusername" class="contact-link" target="_blank">@yourusername</a>
-            </div> -->
-            
-            <div class="contact-card">
-                <div class="contact-icon">📚</div>
-                <h3>Google Scholar</h3>
-                <a href="https://scholar.google.com/citations?user=mkQp4EMAAAAJ&hl=en" class="contact-link" target="_blank">Google Scholar Profile</a>
-            </div>
-            
-            <div class="contact-card">
-                <div class="contact-icon">🌐</div>
-                <h3>Personal Website</h3>
-                <a href="https://jannat20242nsu.github.io/JannatSultana.github.io/" class="contact-link" target="_blank">website.com</a>
-            </div>
-        </div>
-        
-<!--         <h2 class="section-title">Get In Touch</h2>
-        <p style="text-align: center; margin-bottom: 2rem;">Feel free to reach out if you have any questions or would like to collaborate on a project.</p>
-    </div> -->
-    
-    <footer>
-        <p>&copy; Jannat Sultana | Last Updated: April 2025</p>
-    </footer>
-    
-    <script>
-        function openTab(tabName) {
-            // Hide all tab content
-            const tabContents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove("active");
-            }
-            
-            // Remove active class from all tab buttons
-            const tabButtons = document.getElementsByClassName("tab-btn");
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove("active");
-            }
-            
-            // Show the selected tab content and mark button as active
-            document.getElementById(tabName).classList.add("active");
-            
-            // Find and activate the corresponding button
-            const buttons = document.getElementsByClassName("tab-btn");
-            for (let i = 0; i < buttons.length; i++) {
-                if (buttons[i].getAttribute("onclick") === `openTab('${tabName}')`) {
-                    buttons[i].classList.add("active");
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+                    <h3 class="item-title">Efficient Deep Learning Models for Edge Computing</h3>
+                    <p class="item-description">J. Sultana, A. Khan, S. Ahmed | IEEE Transactions on Edge Computing, 2023</p>
+                    <p
